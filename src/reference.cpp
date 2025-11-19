@@ -534,9 +534,9 @@ ErrorCode Reference::to_svg(FILE* out, double scaling, uint32_t precision) const
     char* ref_name = (char*)allocate(strlen(src_name) + 1);
     // NOTE: Here be dragons if name is not ASCII.  The GDSII specification imposes ASCII-only
     // for strings, but who knows…
-    char* d = ref_name;
-    for (const char* c = src_name; *c != 0; c++, d++) *d = *c == '#' ? '_' : *c;
-    *d = 0;
+    //char* d = ref_name;
+    //for (const char* c = src_name; *c != 0; c++, d++) *d = *c == '#' ? '_' : *c;
+    //*d = 0;
 
     Vec2 zero = {0, 0};
     Array<Vec2> offsets = {};
