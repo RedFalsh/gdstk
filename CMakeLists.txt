@@ -39,7 +39,7 @@ if(APPLE)
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -undefined dynamic_lookup -flat_namespace")
 endif()
 
-add_subdirectory(external)
+#add_subdirectory(external)
 add_subdirectory(src)
 
 if("${SKBUILD}" STREQUAL "2")
