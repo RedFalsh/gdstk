@@ -1,26 +1,15 @@
 include(GNUInstallDirs)
-find_package(clipper)
+
 find_package(ZLIB)
-if(NOT ZLIB_FOUND)
-    # Check first for header files
-    if(DEFINED ENV{ZLIB_INCLUDE_DIRS})
-        set(ZLIB_INCLUDE_DIRS $ENV{ZLIB_INCLUDE_DIRS})
-    else()
-        message(FATAL_ERROR "ZLIB headers were not found, either via find_package or env variable")
-    endif()
-
-    # Use normal library-finding methods first
-    find_library(ZLIB_LIBRARIES zlib)
-    # But give precedence to user-set library path
-    if(DEFINED ENV{ZLIB_LIBRARIES})
-        set(ZLIB_LIBRARIES $ENV{ZLIB_LIBRARIES})
-    # This would be set if find_library succeeds, e.g. the library is on PATH, but no env-var was set.
-    elseif(NOT ZLIB_LIBRARIES)
-        message(FATAL_ERROR "ZLIB could not be found, either via find_package, find_library, or env variable.")
-    endif()
-endif(NOT ZLIB_FOUND)
-
+find_package(clipper)
 find_package(Qhull 8 REQUIRED)
+
+message(ZLIB_INCLUDE_DIRS = ${ZLIB_INCLUDE_DIRS})
+message(ZLIB_LIBRARIES= ${ZLIB_LIBRARIES})
+message(clipper_INCLUDE_DIRS = ${clipper_INCLUDE_DIRS})
+message(clipper_LIBRARIES= ${clipper_LIBRARIES})
+message(Qhull_INCLUDE_DIRS = ${Qhull_INCLUDE_DIRS})
+message(Qhull_LIBRARIES= ${Qhull_LIBRARIES})
 
 set(HEADER_LIST 
     "${gdstk_SOURCE_DIR}/include/gdstk/allocator.hpp"
@@ -79,17 +68,20 @@ set_target_properties(gdstk PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 set_target_properties(gdstk PROPERTIES PUBLIC_HEADER "${HEADER_LIST}")
 
+
 target_include_directories(gdstk PUBLIC
     $<BUILD_INTERFACE:${gdstk_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${gdstk_SOURCE_DIR}/external>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    ${clipper_INCLUDE_DIRS}
     ${ZLIB_INCLUDE_DIRS}
-    ${QHULL_INCLUDE_DIRS})
+    ${Qhull_INCLUDE_DIRS})
 
 target_link_libraries(gdstk
     ${ZLIB_LIBRARIES}
-    ${QHULL_LIBRARIES}
-    clipper)
+    ${Qhull_LIBRARIES}
+    ${clipper_LIBRARIES}
+    )
 
 if(UNIX)
     target_link_libraries(gdstk m)
