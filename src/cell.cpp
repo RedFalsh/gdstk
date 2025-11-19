@@ -818,9 +818,9 @@ ErrorCode Cell::to_svg(FILE* out, double scaling, uint32_t precision, const char
     char* buffer = (char*)allocate(strlen(name) + 1);
     // NOTE: Here be dragons if name is not ASCII.  The GDSII specification imposes ASCII-only
     // for strings, but who knows…
-    char* d = buffer;
-    for (char* c = name; *c != 0; c++, d++) *d = *c == '#' ? '_' : *c;
-    *d = 0;
+    //char* d = buffer;
+    //for (char* c = name; *c != 0; c++, d++) *d = *c == '#' ? '_' : *c;
+    //*d = 0;
 
     if (attributes) {
         fprintf(out, "<g id=\"%s\" %s>\n", buffer, attributes);
