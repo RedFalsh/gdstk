@@ -1,6 +1,6 @@
 include(GNUInstallDirs)
-
-find_package(ZLIB 1.2.7)
+find_package(clipper)
+find_package(ZLIB)
 if(NOT ZLIB_FOUND)
     # Check first for header files
     if(DEFINED ENV{ZLIB_INCLUDE_DIRS})
